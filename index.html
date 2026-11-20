@@ -14,20 +14,20 @@
     }
 
     :root {
-      --surface-bg: #ececef;
-      --surface-frame: rgba(240, 240, 243, 0.86);
+      --page-solid-bg: #ffffff;
+      --card-solid-bg: #f7f7f9;
       --surface-frame-edge: rgba(24, 24, 27, 0.08);
       --surface-frame-highlight: rgba(255, 255, 255, 0.96);
-      --surface-frame-shadow: 0 22px 44px -22px rgba(24, 24, 27, 0.28), 0 6px 16px -10px rgba(24, 24, 27, 0.14);
-      --surface-tile: linear-gradient(180deg, #ffffff 0%, #f6f6f8 100%);
+      --surface-frame-shadow: none;
+      --surface-tile: #ffffff;
       --surface-tile-edge: rgba(24, 24, 27, 0.08);
       --surface-tile-highlight: rgba(255, 255, 255, 1);
-      --surface-tile-shadow: 0 4px 10px -4px rgba(24, 24, 27, 0.14);
-      --surface-well: rgba(24, 24, 27, 0.05);
+      --surface-tile-shadow: 0 2px 8px -3px rgba(24, 24, 27, 0.08);
+      --surface-well: rgba(24, 24, 27, 0.045);
       --surface-track: rgba(24, 24, 27, 0.08);
       --ink: #27272a;
       --ink-strong: #18181b;
-      --muted: rgba(39, 39, 42, 0.58);
+      --muted: rgba(39, 39, 42, 0.62);
       --faint: rgba(24, 24, 27, 0.16);
       --ring: rgba(24, 24, 27, 0.28);
       --solid: #27272a;
@@ -42,14 +42,22 @@
       touch-action: manipulation;
     }
 
+    html,
+    body,
+    .invitation,
+    section,
+    footer {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+      background-image: none !important;
+    }
+
     html {
       scroll-behavior: smooth;
-      background: var(--surface-bg);
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-      background: var(--surface-bg);
       color: var(--ink);
       overflow-x: hidden;
     }
@@ -64,30 +72,42 @@
       max-width: 500px;
       min-height: 100vh;
       margin: 0 auto;
-      background: #f4f4f6;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 0 60px rgba(24, 24, 27, 0.08);
     }
 
-    section {
+    section,
+    footer {
       width: 100%;
       position: relative;
     }
 
-    /* Contenedor base tipo Frame del diseño de formularios */
+    /* Contenedor base tipo Frame sobre fondo blanco continuo */
     .stepper-frame-card {
       position: relative;
       max-width: 430px;
       margin: 0 auto;
-      padding: 26px 22px;
-      background: var(--surface-frame);
+      padding: 24px 20px;
+      background: var(--card-solid-bg);
       border: 1px solid var(--surface-frame-edge);
       border-radius: 26px;
-      box-shadow: var(--surface-frame-shadow), inset 0 1px 0 var(--surface-frame-highlight);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      box-shadow: none;
       text-align: center;
+      overflow: hidden;
+      transition: opacity 0.36s var(--settle);
+    }
+
+    .stepper-content-blur {
+      position: relative;
+      filter: blur(2.2px);
+      opacity: 0.78;
+      transition: filter 0.36s var(--settle), opacity 0.36s var(--settle);
+      will-change: filter, opacity;
+    }
+
+    .stepper-frame-card.is-focused .stepper-content-blur {
+      filter: blur(0px);
+      opacity: 1;
     }
 
     /* HERO */
@@ -99,7 +119,7 @@
       text-align: center;
       padding: max(30px, env(safe-area-inset-top)) 25px max(30px, env(safe-area-inset-bottom)) 25px;
       background: linear-gradient(rgba(18, 18, 22, 0.28), rgba(18, 18, 22, 0.52)),
-        url("images/portada.jpg") center / cover no-repeat;
+        url("images/portada.jpg") center / cover no-repeat !important;
       color: #ffffff;
     }
 
@@ -108,11 +128,9 @@
       max-width: 400px;
       padding: 28px 22px;
       border-radius: 26px;
-      background: rgba(24, 24, 27, 0.24);
+      background: rgba(24, 24, 27, 0.32);
       border: 1px solid rgba(255, 255, 255, 0.16);
       box-shadow: 0 22px 44px -20px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
     }
 
     .small-title {
@@ -187,8 +205,7 @@
 
     /* FECHA Y CONTADOR (Save Date) */
     .date-time-section {
-      padding: 26px 20px;
-      background: #f4f4f6;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -303,8 +320,7 @@
 
     /* ITINERARIO */
     .itinerary-section {
-      padding: 26px 20px;
-      background: #f4f4f6;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -341,7 +357,7 @@
       border-radius: 50%;
       background: #ffffff;
       border: 2px solid var(--solid);
-      box-shadow: 0 0 0 4px rgba(240, 240, 243, 0.9);
+      box-shadow: 0 0 0 4px var(--card-solid-bg);
       z-index: 2;
       transition: transform 0.22s var(--settle), background 0.22s ease;
     }
@@ -469,8 +485,7 @@
 
     /* DRESSCODE */
     .dresscode-section {
-      background: #f4f4f6;
-      padding: 26px 20px;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -604,8 +619,7 @@
 
     /* REGALO SUGERIDO */
     .gifts-section {
-      background: #f4f4f6;
-      padding: 26px 20px;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -791,8 +805,7 @@
 
     /* GALERÍA DE FOTOS */
     .gallery-section {
-      background: #f4f4f6;
-      padding: 26px 20px;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -916,8 +929,7 @@
 
     /* RSVP (CELEBREMOS JUNTOS) */
     .rsvp-section {
-      background: #f4f4f6;
-      padding: 26px 20px;
+      padding: 14px 20px;
       text-align: center;
     }
 
@@ -1150,7 +1162,7 @@
     }
 
     .music-toggle-btn {
-      background: rgba(24, 24, 27, 0.85);
+      background: rgba(24, 24, 27, 0.88);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(255, 255, 255, 0.16);
@@ -1189,7 +1201,7 @@
       width: 178px;
       height: 44px;
       padding: 0 14px;
-      background: rgba(24, 24, 27, 0.84);
+      background: rgba(24, 24, 27, 0.88);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1298,7 +1310,7 @@
     .map-modal-card {
       width: 100%;
       max-width: 430px;
-      background: var(--surface-frame);
+      background: var(--card-solid-bg);
       border: 1px solid var(--surface-frame-edge);
       border-radius: 26px;
       overflow: hidden;
@@ -1417,7 +1429,7 @@
     }
 
     .modal-content {
-      background: var(--surface-frame);
+      background: var(--card-solid-bg);
       border: 1px solid var(--surface-frame-edge);
       color: var(--ink-strong);
       width: 100%;
@@ -1490,8 +1502,7 @@
 
     /* PIE DE PÁGINA */
     .compact-footer-section {
-      padding: 18px 20px 104px 20px;
-      background: #f4f4f6;
+      padding: 14px 20px 104px 20px;
       text-align: center;
     }
 
@@ -1632,39 +1643,41 @@
     <!-- SAVE DATE -->
     <section class="date-time-section">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Save Date</h2>
-        <div class="date-main-row">
-          <div class="calendar-icon-inline" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8" y1="2" x2="8" y2="6"></line>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Save Date</h2>
+          <div class="date-main-row">
+            <div class="calendar-icon-inline" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="date-big-day">12</div>
+            <div class="date-text-group">
+              <span class="date-month-name">Diciembre</span>
+              <span class="date-year-num">2026</span>
+            </div>
           </div>
-          <div class="date-big-day">12</div>
-          <div class="date-text-group">
-            <span class="date-month-name">Diciembre</span>
-            <span class="date-year-num">2026</span>
-          </div>
-        </div>
-        <div class="date-divider-clean"></div>
-        <div class="timer-grid">
-          <div class="timer-box">
-            <div class="timer-digits" id="days">00</div>
-            <div class="timer-unit">días</div>
-          </div>
-          <div class="timer-box">
-            <div class="timer-digits" id="hours">00</div>
-            <div class="timer-unit">horas</div>
-          </div>
-          <div class="timer-box">
-            <div class="timer-digits" id="minutes">00</div>
-            <div class="timer-unit">minutos</div>
-          </div>
-          <div class="timer-box">
-            <div class="timer-digits" id="seconds">00</div>
-            <div class="timer-unit">segundos</div>
+          <div class="date-divider-clean"></div>
+          <div class="timer-grid">
+            <div class="timer-box">
+              <div class="timer-digits" id="days">00</div>
+              <div class="timer-unit">días</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-digits" id="hours">00</div>
+              <div class="timer-unit">horas</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-digits" id="minutes">00</div>
+              <div class="timer-unit">minutos</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-digits" id="seconds">00</div>
+              <div class="timer-unit">segundos</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1673,65 +1686,67 @@
     <!-- ITINERARIO -->
     <section class="itinerary-section" id="evento">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Itinerario</h2>
-        <div class="timeline">
-          <!-- 1. CEREMONIA -->
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="event-card">
-              <div class="event-card-header">
-                <div class="event-header-left">
-                  <div class="event-icon-box" aria-hidden="true">
-                    <img width="32" height="32" src="https://img.icons8.com/windows/32/church.png" alt="Ceremonia"/>
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Itinerario</h2>
+          <div class="timeline">
+            <!-- 1. CEREMONIA -->
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="event-card">
+                <div class="event-card-header">
+                  <div class="event-header-left">
+                    <div class="event-icon-box" aria-hidden="true">
+                      <img width="32" height="32" src="https://img.icons8.com/windows/32/church.png" alt="Ceremonia"/>
+                    </div>
+                    <h3>Ceremonia</h3>
                   </div>
-                  <h3>Ceremonia</h3>
+                  <span class="event-time-badge">6:00 PM</span>
                 </div>
-                <span class="event-time-badge">6:00 PM</span>
+                <span class="event-venue">Capilla de la Catedral del Sagrado Corazón de Jesús</span>
+                <p>La ceremonia comenzará puntualmente; recomendamos llegar 15 minutos antes.</p>
+                <button type="button" class="event-location-btn" onclick="openLocationModal('ceremonia')">
+                  <span>Ver ubicación</span>
+                </button>
               </div>
-              <span class="event-venue">Capilla de la Catedral del Sagrado Corazón de Jesús</span>
-              <p>La ceremonia comenzará puntualmente; recomendamos llegar 15 minutos antes.</p>
-              <button type="button" class="event-location-btn" onclick="openLocationModal('ceremonia')">
-                <span>Ver ubicación</span>
-              </button>
             </div>
-          </div>
 
-          <!-- 2. RECEPCIÓN -->
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="event-card">
-              <div class="event-card-header">
-                <div class="event-header-left">
-                  <div class="event-icon-box" aria-hidden="true">
-                    <img width="32" height="32" src="icons8-recepción.svg" alt="Recepción" onerror="this.src='https://img.icons8.com/windows/32/champagne.png';"/>
+            <!-- 2. RECEPCIÓN -->
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="event-card">
+                <div class="event-card-header">
+                  <div class="event-header-left">
+                    <div class="event-icon-box" aria-hidden="true">
+                      <img width="32" height="32" src="icons8-recepción.svg" alt="Recepción" onerror="this.src='https://img.icons8.com/windows/32/champagne.png';"/>
+                    </div>
+                    <h3>Recepción</h3>
                   </div>
-                  <h3>Recepción</h3>
+                  <span class="event-time-badge">8:00 PM</span>
                 </div>
-                <span class="event-time-badge">8:00 PM</span>
+                <span class="event-venue">Arcángeles Centro de Eventos, Salón 2</span>
+                <p>Habrá estacionamiento disponible.</p>
+                <button type="button" class="event-location-btn" onclick="openLocationModal('recepcion')">
+                  <span>Ver ubicación</span>
+                </button>
               </div>
-              <span class="event-venue">Arcángeles Centro de Eventos, Salón 2</span>
-              <p>Habrá estacionamiento disponible.</p>
-              <button type="button" class="event-location-btn" onclick="openLocationModal('recepcion')">
-                <span>Ver ubicación</span>
-              </button>
             </div>
-          </div>
 
-          <!-- 3. BANQUETE -->
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="event-card">
-              <div class="event-card-header">
-                <div class="event-header-left">
-                  <div class="event-icon-box" aria-hidden="true">
-                    <img width="32" height="32" src="https://img.icons8.com/windows/32/room-service.png" alt="Banquete"/>
+            <!-- 3. BANQUETE -->
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="event-card">
+                <div class="event-card-header">
+                  <div class="event-header-left">
+                    <div class="event-icon-box" aria-hidden="true">
+                      <img width="32" height="32" src="https://img.icons8.com/windows/32/room-service.png" alt="Banquete"/>
+                    </div>
+                    <h3>Banquete</h3>
                   </div>
-                  <h3>Banquete</h3>
+                  <span class="event-time-badge">11:00 PM</span>
                 </div>
-                <span class="event-time-badge">11:00 PM</span>
+                <span class="event-venue">Misma ubicación de la recepción</span>
+                <p>Cena, brindis y música para celebrar juntos.</p>
               </div>
-              <span class="event-venue">Misma ubicación de la recepción</span>
-              <p>Cena, brindis y música para celebrar juntos.</p>
             </div>
           </div>
         </div>
@@ -1741,39 +1756,41 @@
     <!-- DRESSCODE -->
     <section class="dresscode-section">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Dresscode</h2>
-        <p class="dresscode-description">Te invitamos a portar atuendos formales para acompañarnos en esta fecha inolvidable.</p>
-        <div class="dresscode-grid-cards">
-          <div class="dresscode-card-item">
-            <div class="dresscode-icon-circle">
-              <img src="https://img.icons8.com/windows/32/shirt.png" alt="Hombre"/>
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Dresscode</h2>
+          <p class="dresscode-description">Te invitamos a portar atuendos formales para acompañarnos en esta fecha inolvidable.</p>
+          <div class="dresscode-grid-cards">
+            <div class="dresscode-card-item">
+              <div class="dresscode-icon-circle">
+                <img src="https://img.icons8.com/windows/32/shirt.png" alt="Hombre"/>
+              </div>
+              <span class="dresscode-card-title">Hombre</span>
+              <span class="dresscode-card-sub">Traje / Formal</span>
             </div>
-            <span class="dresscode-card-title">Hombre</span>
-            <span class="dresscode-card-sub">Traje / Formal</span>
-          </div>
-          <div class="dresscode-card-item">
-            <div class="dresscode-icon-circle">
-              <img src="https://img.icons8.com/windows/32/modelled-dress.png" alt="Mujer"/>
+            <div class="dresscode-card-item">
+              <div class="dresscode-icon-circle">
+                <img src="https://img.icons8.com/windows/32/modelled-dress.png" alt="Mujer"/>
+              </div>
+              <span class="dresscode-card-title">Mujer</span>
+              <span class="dresscode-card-sub">Vestido largo</span>
             </div>
-            <span class="dresscode-card-title">Mujer</span>
-            <span class="dresscode-card-sub">Vestido largo</span>
           </div>
-        </div>
-        <div class="dresscode-alert-box">
-          <div class="dresscode-alert-top">
-            <div class="dresscode-alert-icon">
-              <img src="icons8-atención.svg" alt="atención" onerror="this.style.display='none';"/>
+          <div class="dresscode-alert-box">
+            <div class="dresscode-alert-top">
+              <div class="dresscode-alert-icon">
+                <img src="icons8-atención.svg" alt="atención" onerror="this.style.display='none';"/>
+              </div>
+              <span class="dresscode-alert-text">Reservar el color rosa y tonos similares</span>
             </div>
-            <span class="dresscode-alert-text">Reservar el color rosa y tonos similares</span>
-          </div>
-          <div class="color-palette">
-            <div class="color-swatch" style="background-color: #f7dcd5;" title="Rosa Pastel Suave"></div>
-            <div class="color-swatch" style="background-color: #f0c9bf;" title="Rosa Claro"></div>
-            <div class="color-swatch" style="background-color: #E8B5A9;" title="Tono del vestido (#E8B5A9)"></div>
-            <div class="color-swatch" style="background-color: #dea193;" title="Rosa Medio"></div>
-            <div class="color-swatch" style="background-color: #d18274;" title="Rosa Tono Base"></div>
-            <div class="color-swatch" style="background-color: #c26f60;" title="Rosa Profundo Claro"></div>
-            <div class="color-swatch" style="background-color: #b55c4c;" title="Rosa Profundo"></div>
+            <div class="color-palette">
+              <div class="color-swatch" style="background-color: #f7dcd5;" title="Rosa Pastel Suave"></div>
+              <div class="color-swatch" style="background-color: #f0c9bf;" title="Rosa Claro"></div>
+              <div class="color-swatch" style="background-color: #E8B5A9;" title="Tono del vestido (#E8B5A9)"></div>
+              <div class="color-swatch" style="background-color: #dea193;" title="Rosa Medio"></div>
+              <div class="color-swatch" style="background-color: #d18274;" title="Rosa Tono Base"></div>
+              <div class="color-swatch" style="background-color: #c26f60;" title="Rosa Profundo Claro"></div>
+              <div class="color-swatch" style="background-color: #b55c4c;" title="Rosa Profundo"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1782,59 +1799,61 @@
     <!-- REGALO SUGERIDO -->
     <section class="gifts-section">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Regalo Sugerido</h2>
-        <p class="gifts-intro-text">Su presencia es nuestro mejor regalo, pero si desean tener un detalle con nosotros, pueden hacerlo mediante:</p>
-        <div class="gifts-container">
-          <!-- Tarjeta 1: Efectivo -->
-          <div class="gift-modern-card">
-            <div class="gift-card-header">
-              <div class="gift-header-left">
-                <div class="gift-icon-wrapper" aria-hidden="true">
-                  <img width="48" height="48" src="icons8-mensaje-relleno.svg" alt="Efectivo"/>
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Regalo Sugerido</h2>
+          <p class="gifts-intro-text">Su presencia es nuestro mejor regalo, pero si desean tener un detalle con nosotros, pueden hacerlo mediante:</p>
+          <div class="gifts-container">
+            <!-- Tarjeta 1: Efectivo -->
+            <div class="gift-modern-card">
+              <div class="gift-card-header">
+                <div class="gift-header-left">
+                  <div class="gift-icon-wrapper" aria-hidden="true">
+                    <img width="48" height="48" src="icons8-mensaje-relleno.svg" alt="Efectivo"/>
+                  </div>
+                  <div class="gift-title-group">
+                    <h3>Efectivo</h3>
+                    <span class="gift-subtitle">En el salón del evento</span>
+                  </div>
                 </div>
-                <div class="gift-title-group">
-                  <h3>Efectivo</h3>
-                  <span class="gift-subtitle">En el salón del evento</span>
-                </div>
+                <span class="gift-pill-badge">Recepción</span>
               </div>
-              <span class="gift-pill-badge">Recepción</span>
+              <p class="gift-card-body">Tendremos un buzón habilitado en la entrada del evento para que puedan depositar sus tarjetas y efectivo.</p>
             </div>
-            <p class="gift-card-body">Tendremos un buzón habilitado en la entrada del evento para que puedan depositar sus tarjetas y efectivo.</p>
-          </div>
 
-          <!-- Tarjeta 2: Transferencia electrónica -->
-          <div class="gift-modern-card">
-            <div class="gift-card-header">
-              <div class="gift-header-left">
-                <div class="gift-icon-wrapper" aria-hidden="true">
-                  <img width="50" height="50" src="icons8-parte-trasera-de-tarjeta-bancaria.svg" alt="Transferencia"/>
+            <!-- Tarjeta 2: Transferencia electrónica -->
+            <div class="gift-modern-card">
+              <div class="gift-card-header">
+                <div class="gift-header-left">
+                  <div class="gift-icon-wrapper" aria-hidden="true">
+                    <img width="50" height="50" src="icons8-parte-trasera-de-tarjeta-bancaria.svg" alt="Transferencia"/>
+                  </div>
+                  <div class="gift-title-group">
+                    <h3>Transferencia</h3>
+                    <span class="gift-subtitle">Depósito o banca móvil</span>
+                  </div>
                 </div>
-                <div class="gift-title-group">
-                  <h3>Transferencia</h3>
-                  <span class="gift-subtitle">Depósito o banca móvil</span>
+                <span class="gift-pill-badge">SPEI</span>
+              </div>
+              <p class="gift-card-body">Si prefieres realizar una transferencia electrónica, puedes utilizar los siguientes datos bancarios:</p>
+              <div class="bank-vault-box">
+                <div class="bank-vault-row">
+                  <span class="bank-vault-label">Banco</span>
+                  <span class="bank-vault-value">BANAMEX</span>
+                </div>
+                <div class="bank-vault-row">
+                  <span class="bank-vault-label">Titular</span>
+                  <span class="bank-vault-value">Magdalena Arvilla</span>
+                </div>
+                <div class="bank-vault-row">
+                  <span class="bank-vault-label">CLABE</span>
+                  <span class="bank-vault-clabe" id="clabeNumber">123456789012345678</span>
                 </div>
               </div>
-              <span class="gift-pill-badge">SPEI</span>
+              <button class="modern-copy-btn" id="copyClabeBtn" onclick="copyClabe()">
+                <img width="24" height="24" src="https://img.icons8.com/forma-regular/24/copy.png" alt="copy" id="copyIconImg"/>
+                <span id="copyBtnText">Copiar CLABE interbancaria</span>
+              </button>
             </div>
-            <p class="gift-card-body">Si prefieres realizar una transferencia electrónica, puedes utilizar los siguientes datos bancarios:</p>
-            <div class="bank-vault-box">
-              <div class="bank-vault-row">
-                <span class="bank-vault-label">Banco</span>
-                <span class="bank-vault-value">BANAMEX</span>
-              </div>
-              <div class="bank-vault-row">
-                <span class="bank-vault-label">Titular</span>
-                <span class="bank-vault-value">Magdalena Arvilla</span>
-              </div>
-              <div class="bank-vault-row">
-                <span class="bank-vault-label">CLABE</span>
-                <span class="bank-vault-clabe" id="clabeNumber">123456789012345678</span>
-              </div>
-            </div>
-            <button class="modern-copy-btn" id="copyClabeBtn" onclick="copyClabe()">
-              <img width="24" height="24" src="https://img.icons8.com/forma-regular/24/copy.png" alt="copy" id="copyIconImg"/>
-              <span id="copyBtnText">Copiar CLABE interbancaria</span>
-            </button>
           </div>
         </div>
       </div>
@@ -1843,16 +1862,18 @@
     <!-- GALERÍA DE FOTOS -->
     <section class="gallery-section">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Galeria de Fotos</h2>
-        <div class="gallery-container">
-          <div class="gallery-card full-width" onclick="openPhotoModal(0)">
-            <img src="alejandra xv (221).jpg" alt="Fotografía destacada">
-          </div>
-          <div class="gallery-card" onclick="openPhotoModal(1)">
-            <img src="alejandra xv (215).jpg" alt="Fotografía">
-          </div>
-          <div class="gallery-card" onclick="openPhotoModal(2)">
-            <img src="alejandra xv (272).jpg" alt="Fotografía">
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Galeria de Fotos</h2>
+          <div class="gallery-container">
+            <div class="gallery-card full-width" onclick="openPhotoModal(0)">
+              <img src="alejandra xv (221).jpg" alt="Fotografía destacada">
+            </div>
+            <div class="gallery-card" onclick="openPhotoModal(1)">
+              <img src="alejandra xv (215).jpg" alt="Fotografía">
+            </div>
+            <div class="gallery-card" onclick="openPhotoModal(2)">
+              <img src="alejandra xv (272).jpg" alt="Fotografía">
+            </div>
           </div>
         </div>
       </div>
@@ -1861,62 +1882,64 @@
     <!-- CELEBREMOS JUNTOS (RSVP) -->
     <section class="rsvp-section" id="rsvpSection">
       <div class="stepper-frame-card">
-        <h2 class="section-box-title">Celebremos Juntos</h2>
-        <p id="rsvpSubtitle">Confirma tu asistencia antes del 1 de diciembre.</p>
+        <div class="stepper-content-blur">
+          <h2 class="section-box-title">Celebremos Juntos</h2>
+          <p id="rsvpSubtitle">Confirma tu asistencia antes del 1 de diciembre.</p>
 
-        <div id="alreadyConfirmedView" style="display: none; margin-top: 14px;">
-          <p style="font-size: 13.5px; margin-bottom: 10px; color: var(--ink-strong); font-weight: 600;">¡Ya has confirmado tu asistencia!</p>
-          <button class="button" onclick="openGuestListModal()" style="margin-right: 6px;">Ver lista confirmada</button>
-          <button class="button" onclick="editRsvpDevice()" style="background: var(--surface-track) !important; color: var(--ink-strong) !important;">Editar</button>
-        </div>
-
-        <div id="initialRsvpWrapper">
-          <button class="button" id="startRsvpBtn" onclick="openRsvpForm()">Confirmar asistencia</button>
-          <div style="margin-top: 8px;">
-            <button class="button" onclick="openGuestListModal()" style="background: var(--surface-well) !important; color: var(--ink-strong) !important; border: 1px solid var(--surface-frame-edge) !important; font-size: 10.5px; min-height: 36px; padding: 7px 15px; margin-top: 4px;">
-              Ver lista de invitados confirmados
-            </button>
-          </div>
-        </div>
-
-        <div class="rsvp-container" id="rsvpFormContainer" style="display: none;">
-          <div class="rsvp-step" id="step1">
-            <h3 style="font-weight: 600; text-align: center; margin-bottom: 14px; font-size: 15px; color: var(--ink-strong);">¿Qué tipo de invitado eres?</h3>
-            <div class="guest-type-options">
-              <button class="type-btn" onclick="selectGuestType('Familia Materna')">
-                <span>Familiar Materno</span>
-                <span>&rarr;</span>
-              </button>
-              <button class="type-btn" onclick="selectGuestType('Familia Paterna')">
-                <span>Familiar Paterno</span>
-                <span>&rarr;</span>
-              </button>
-              <button class="type-btn" onclick="selectGuestType('Amig@')">
-                <span>Amigo(a)</span>
-                <span>&rarr;</span>
-              </button>
-            </div>
-            <button class="button btn-secondary" onclick="cancelRsvp()" style="width: 100%; background: var(--surface-track); color: var(--ink-strong); min-height: 40px; margin-top: 14px;">Cancelar</button>
+          <div id="alreadyConfirmedView" style="display: none; margin-top: 14px;">
+            <p style="font-size: 13.5px; margin-bottom: 10px; color: var(--ink-strong); font-weight: 600;">¡Ya has confirmado tu asistencia!</p>
+            <button class="button" onclick="openGuestListModal()" style="margin-right: 6px;">Ver lista confirmada</button>
+            <button class="button" onclick="editRsvpDevice()" style="background: var(--surface-track) !important; color: var(--ink-strong) !important;">Editar</button>
           </div>
 
-          <div class="rsvp-step" id="step2">
-            <div style="text-align: center;">
-              <span class="selected-tag" id="selectedTypeTag">FAMILIAR MATERNO</span>
+          <div id="initialRsvpWrapper">
+            <button class="button" id="startRsvpBtn" onclick="openRsvpForm()">Confirmar asistencia</button>
+            <div style="margin-top: 8px;">
+              <button class="button" onclick="openGuestListModal()" style="background: var(--surface-well) !important; color: var(--ink-strong) !important; border: 1px solid var(--surface-frame-edge) !important; font-size: 10.5px; min-height: 36px; padding: 7px 15px; margin-top: 4px;">
+                Ver lista de invitados confirmados
+              </button>
             </div>
-            <div class="form-group">
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <input type="text" placeholder="Nombre(s)" id="firstName" class="form-input" oninput="checkFormValidity()">
-                <input type="text" id="lastName" class="form-input" placeholder="2 apellidos" oninput="checkFormValidity()">
+          </div>
+
+          <div class="rsvp-container" id="rsvpFormContainer" style="display: none;">
+            <div class="rsvp-step" id="step1">
+              <h3 style="font-weight: 600; text-align: center; margin-bottom: 14px; font-size: 15px; color: var(--ink-strong);">¿Qué tipo de invitado eres?</h3>
+              <div class="guest-type-options">
+                <button class="type-btn" onclick="selectGuestType('Familia Materna')">
+                  <span>Familiar Materno</span>
+                  <span>&rarr;</span>
+                </button>
+                <button class="type-btn" onclick="selectGuestType('Familia Paterna')">
+                  <span>Familiar Paterno</span>
+                  <span>&rarr;</span>
+                </button>
+                <button class="type-btn" onclick="selectGuestType('Amig@')">
+                  <span>Amigo(a)</span>
+                  <span>&rarr;</span>
+                </button>
               </div>
+              <button class="button btn-secondary" onclick="cancelRsvp()" style="width: 100%; background: var(--surface-track); color: var(--ink-strong); min-height: 40px; margin-top: 14px;">Cancelar</button>
             </div>
-            <div class="form-group" id="companionsSection">
-              <label id="companionsLabel">Acompañante(s)</label>
-              <div class="companions-box" id="companionsList"></div>
-              <button type="button" class="add-comp-btn" id="addCompBtn" onclick="addCompanionField()">+ Agregar acompañante</button>
-            </div>
-            <div class="form-actions">
-              <button class="button btn-secondary" onclick="goBackToStep1()">Atrás</button>
-              <button class="button btn-primary" id="submitBtn" onclick="submitRsvp()" disabled>Enviar</button>
+
+            <div class="rsvp-step" id="step2">
+              <div style="text-align: center;">
+                <span class="selected-tag" id="selectedTypeTag">FAMILIAR MATERNO</span>
+              </div>
+              <div class="form-group">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <input type="text" placeholder="Nombre(s)" id="firstName" class="form-input" oninput="checkFormValidity()">
+                  <input type="text" id="lastName" class="form-input" placeholder="2 apellidos" oninput="checkFormValidity()">
+                </div>
+              </div>
+              <div class="form-group" id="companionsSection">
+                <label id="companionsLabel">Acompañante(s)</label>
+                <div class="companions-box" id="companionsList"></div>
+                <button type="button" class="add-comp-btn" id="addCompBtn" onclick="addCompanionField()">+ Agregar acompañante</button>
+              </div>
+              <div class="form-actions">
+                <button class="button btn-secondary" onclick="goBackToStep1()">Atrás</button>
+                <button class="button btn-primary" id="submitBtn" onclick="submitRsvp()" disabled>Enviar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -2065,6 +2088,47 @@
   </audio>
 
   <script>
+    // === ENFOQUE DE SECCIÓN ACTIVA AL DESLIZAR (SCROLL FOCUS) ===
+    function initScrollSectionFocus() {
+      const cards = Array.from(document.querySelectorAll(".stepper-frame-card"));
+      if (!cards.length) return;
+
+      let tickScheduled = false;
+
+      const updateFocus = () => {
+        tickScheduled = false;
+        const viewportCenter = window.innerHeight * 0.5;
+        let bestCard = null;
+        let bestDistance = Infinity;
+
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.top + rect.height * 0.5;
+          const dist = Math.abs(cardCenter - viewportCenter);
+
+          if (rect.bottom > 0 && rect.top < window.innerHeight && dist < bestDistance) {
+            bestDistance = dist;
+            bestCard = card;
+          }
+        });
+
+        cards.forEach(card => {
+          card.classList.toggle("is-focused", card === bestCard);
+        });
+      };
+
+      const onScrollOrResize = () => {
+        if (!tickScheduled) {
+          tickScheduled = true;
+          requestAnimationFrame(updateFocus);
+        }
+      };
+
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize, { passive: true });
+      updateFocus();
+    }
+
     // === BLOQUEO DE SCROLL DE FONDO EN MODALES ===
     let savedScrollY = 0;
     let modalLockCount = 0;
@@ -2185,6 +2249,7 @@
       }
       checkFormValidity();
       initPhotoModalControls();
+      initScrollSectionFocus();
       preloadGalleryAndOgl();
     });
 
@@ -2213,12 +2278,9 @@
     const FIT_ASPECT = { portrait: 0.75, square: 1, landscape: 4 / 3 };
     const TAPS = 12;
     const PIXEL_BUDGET = 4.5e6;
-    const INTRO_DURATION = { rise: 0.01, bloom: 0.01, spin: 0.01, deal: 0.01, fade: 0.01 };
 
     const wrap = (value, size) => ((((value + size / 2) % size) + size) % size) - size / 2;
     const clamp01 = value => Math.min(Math.max(value, 0), 1);
-    const easeOut = value => 1 - Math.pow(1 - clamp01(value), 3);
-    const easeOutQuint = value => 1 - Math.pow(1 - clamp01(value), 5);
     const easeInOut = value => {
       const t = clamp01(value);
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -2358,15 +2420,24 @@
     }
 
     const preloadedImages = new Map();
+    function loadImageElement(src) {
+      if (preloadedImages.has(src)) {
+        return preloadedImages.get(src);
+      }
+      const img = new Image();
+      img.decoding = "async";
+      img.src = src;
+      if (typeof img.decode === "function") {
+        img.decode().catch(() => {});
+      }
+      preloadedImages.set(src, img);
+      return img;
+    }
+
     function preloadGalleryAndOgl() {
       getOglModule().catch(() => {});
       GALLERY_ITEMS.forEach(item => {
-        if (preloadedImages.has(item.src)) return;
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.decoding = "async";
-        img.src = item.src;
-        preloadedImages.set(item.src, img);
+        loadImageElement(item.src);
       });
     }
 
@@ -2396,7 +2467,6 @@
 
       const base = BEND_PRESETS.liquid;
       const settings = {
-        intro: "none",
         cardHeight: 0.42,
         gap: 12,
         radius: 0,
@@ -2410,12 +2480,7 @@
         curl: base.curl,
         dispersion: base.dispersion,
         liquid: base.liquid,
-        followCursor: base.followCursor,
-        squeeze: 0.16,
-        focusOnClick: true,
-        autoplay: false,
-        interval: 4,
-        captureWheel: true
+        squeeze: 0.16
       };
 
       const renderer = new Renderer({
@@ -2494,6 +2559,7 @@
           vertex: lensVertex,
           fragment: lensFragment,
           uniforms: lensUniforms,
+          transparent: true,
           depthTest: false,
           depthWrite: false
         })
@@ -2532,10 +2598,13 @@
 
       const applyLoadedImage = (slot, img) => {
         if (!alive || !slots.includes(slot)) return;
+        const w = img.naturalWidth || img.videoWidth || img.width || 0;
+        const h = img.naturalHeight || img.videoHeight || img.height || 0;
+        if (w <= 0 || h <= 0) return;
         slot.texture.image = img;
-        slot.texture.update();
-        slot.image = [img.naturalWidth || 1, img.naturalHeight || 1];
-        slot.aspect = slot.image[0] / slot.image[1];
+        slot.texture.needsUpdate = true;
+        slot.image = [w, h];
+        slot.aspect = w / h;
         slot.loaded = true;
         slot.ready = 1;
         dirty = true;
@@ -2556,27 +2625,22 @@
           aspect: 0.75,
           loaded: false,
           failed: false,
-          ready: 1,
+          ready: 0,
           color: [0.35, 0.35, 0.38],
           image: [3, 4],
           dispose: () => {}
         };
 
-        const cachedImg = preloadedImages.get(item.src);
-        const image = cachedImg || new Image();
-        if (!cachedImg) {
-          image.crossOrigin = "anonymous";
-          image.decoding = "async";
-        }
+        const image = loadImageElement(item.src);
 
-        const onReady = () => {
-          if (image.naturalWidth > 0 && image.naturalHeight > 0) {
-            applyLoadedImage(slot, image);
-          }
-        };
+        const onReady = () => applyLoadedImage(slot, image);
 
         if (image.complete && image.naturalWidth > 0) {
-          applyLoadedImage(slot, image);
+          if (typeof image.decode === "function") {
+            image.decode().then(onReady).catch(onReady);
+          } else {
+            onReady();
+          }
         } else {
           image.addEventListener("load", onReady, { once: true });
           image.addEventListener("error", () => {
@@ -2585,7 +2649,6 @@
             dirty = true;
             start();
           }, { once: true });
-          if (!cachedImg) image.src = item.src;
         }
 
         slot.dispose = () => {
@@ -2859,19 +2922,26 @@
           }
 
           draws.sort((a, b) => Math.abs(b.rel) - Math.abs(a.rel));
-          let first = true;
+
+          renderer.bindFramebuffer(target);
+          gl.viewport(0, 0, target.width, target.height);
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+
           for (const draw of draws) {
             const slot = slots[draw.i];
+            if (slot.loaded && slot.texture.image) {
+              slot.texture.update();
+            }
             cardProgram.uniforms.tMap.value = slot.texture;
             cardProgram.uniforms.uRect.value = [draw.x, draw.y, draw.cw + 2, draw.ch + 2];
             cardProgram.uniforms.uSize.value = [draw.cw, draw.ch];
             cardProgram.uniforms.uImage.value = slot.image;
             cardProgram.uniforms.uAlpha.value = draw.alpha;
-            cardProgram.uniforms.uReady.value = slot.ready;
+            cardProgram.uniforms.uReady.value = slot.loaded ? 1 : 0;
             cardProgram.uniforms.uShift.value = reducedMotion ? 0 : Math.max(-1, Math.min(1, draw.rel / (width * 0.75)));
             cardProgram.uniforms.uPlaceholder.value = slot.color;
-            renderer.render({ scene: cardMesh, target, clear: first });
-            first = false;
+            renderer.render({ scene: cardMesh, target, clear: false });
             instances.push({
               index: draw.i,
               x0: draw.x - draw.cw / 2,
@@ -2881,13 +2951,9 @@
             });
           }
 
-          if (first) {
-            renderer.bindFramebuffer(target);
-            gl.viewport(0, 0, target.width, target.height);
-            gl.clear(gl.COLOR_BUFFER_BIT);
-          }
-
           renderer.bindFramebuffer();
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
           target.texture.bind();
           gl.generateMipmap(gl.TEXTURE_2D);
 
